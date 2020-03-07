@@ -19,7 +19,7 @@ const long interval = 50;
 
 //Setting up parameters for PID controller
 double Setpoint, Input, PIDOutput;
-PID PIDKeepAngle(&Input, &PIDOutput, &Setpoint, 2, 1, 0, DIRECT);
+PID PIDKeepAngle(&Input, &PIDOutput, &Setpoint, 2, 1, 0, DIRECT); 
 
 //Declaring motor controllers
 Servo motorController;
@@ -82,13 +82,19 @@ void RUN_STATE_MACHINE(){
       
     case OPERATE:
          
-      Setpoint = 10; // move to a separate function, setpint should be recieved from rc controller
       Input = xAngle;
       PIDKeepAngle.Compute();
       Serial.print(PIDOutput);
       setMotorSpeed();      
   }
 }
+
+
+//Function for getting the setpoint set by the 
+void GetSetpoint(){
+  Setpoint = 10;
+}
+  
 
 void setMotorSpeed(){
   // This block contains all necessary code to control the speed of the motor, the speed is in %
