@@ -43,7 +43,7 @@ void setup() {
   //Setting up PID controller
   Input = 0;
   Setpoint = 0;
-  PIDKeepAngle.SetMode(AUTOMATIC);
+  PIDKeepAngle.SetMode(MANUAL);
   PIDKeepAngle.SetOutputLimits(-100, 100);
   PIDKeepAngle.SetSampleTime(50);
 
@@ -55,6 +55,7 @@ void loop() {
   unsigned long currentMillis = millis();
   
   if (currentMillis - previousMillis >= interval){
+    previousMillis = currentMillis;
     CalculateAngles();
     RUN_STATE_MACHINE();
   }
@@ -101,7 +102,8 @@ void setMotorSpeed(){
   int motorSpeedServo;
   
   motorSpeedServo = map(PIDOutput, 0, 100, 0, 180);         //mapping to correspond to servo
-  motorController.write(motorSpeedServo);
+  //motorController.write(motorSpeedServo);
+  Serial.write(motorSpeedServo);
 }
 
 void CalculateAngles(){
